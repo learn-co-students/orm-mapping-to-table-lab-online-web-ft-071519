@@ -1,4 +1,3 @@
-require "pry"
 class Student
   attr_accessor :name, :grade
   attr_reader :id
@@ -30,8 +29,9 @@ class Student
       INSERT INTO students (name, grade) 
       VALUES (?, ?)
     SQL
- binding.pry
     DB[:conn].execute(sql, self.name, self.grade)
+
+    @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
   end
 
   def self.create(name:, grade:)
