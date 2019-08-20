@@ -30,8 +30,9 @@ attr_reader :id
        SQL
        
     DB[:conn].execute(sql, self.name, self.grade)	  
+    @id = DB[:conn].execute("SELECT Last_insert_rowid() FROM students")[0][0]
   end
-     @id = DB[:conn].execute("SELECT Last_insert_rowid() FROM students"[0])
+     
   
   def self.create(name:, grade:)
     student = Student.new(name, grade)
